@@ -2,8 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movieflutter/models/movie_model.dart';
 
 class MovieLargeCardWidget extends StatefulWidget {
+  final MovieModel movie;
+
+  const MovieLargeCardWidget({Key key, @required this.movie}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => MovieLargeCardWidgetState();
 }
@@ -12,18 +17,23 @@ class MovieLargeCardWidgetState extends State<MovieLargeCardWidget> {
   StreamSubscription _subscription;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) => Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Image.network(
-              'https://picsum.photos/480?image=9',
+              widget.movie.posterPath,
               fit: BoxFit.fill,
             ),
-            const ListTile(
-              title: Text('The Enchanted Nightingale'),
-              subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
+            ListTile(
+              title: Text(widget.movie.title),
+              subtitle: Text(widget.movie.overview + 'Music by Julie Gable. Lyrics by Sidney Stein.'),
             ),
             ButtonBar(
               children: <Widget>[
@@ -33,27 +43,9 @@ class MovieLargeCardWidgetState extends State<MovieLargeCardWidget> {
                     /* ... */
                   },
                 ),
-                FlatButton(
-                  child: const Text('LISTEN'),
-                  onPressed: () {
-                    /* ... */
-                  },
-                ),
               ],
             ),
           ],
         ),
       );
-}
-
-class _SquareClipper extends CustomClipper<Rect> {
-  @override
-  Rect getClip(Size size) {
-    return new Rect.fromLTWH(0.0, 0.0, size.width, size.width);
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Rect> oldClipper) {
-    return false;
-  }
 }
