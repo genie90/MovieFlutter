@@ -13,22 +13,24 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MovieBloc movieBloc = BlocProvider.of<MovieBloc>(context);
+    final MovieBloc movieBloc = MovieBloc();
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Movie List'),
       ),
       body: BlocProvider<MovieBloc>(
-        bloc: MovieBloc(),
+        bloc: movieBloc,
         child: StreamBuilder<List<MovieModel>>(
             stream: movieBloc.outMoviesList,
             builder: (BuildContext context,
                     AsyncSnapshot<List<MovieModel>> snapshot) =>
                 ListView.builder(
                     itemCount: snapshot.data == null ? 0 : snapshot.data.length,
-                    itemBuilder: (context, index) =>
-                        MovieLargeCardWidget(movie: snapshot.data[index]))),
+                    itemBuilder: (context, index) => Container(
+                        margin:EdgeInsets.all(8.0),
+                        child: MovieLargeCardWidget(
+                            movie: snapshot.data[index])))),
       ),
     );
   }

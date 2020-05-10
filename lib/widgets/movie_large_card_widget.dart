@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movieflutter/api/tmdb_api.dart';
 import 'package:movieflutter/models/movie_model.dart';
 
 class MovieLargeCardWidget extends StatefulWidget {
@@ -26,14 +27,19 @@ class MovieLargeCardWidgetState extends State<MovieLargeCardWidget> {
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Image.network(
-              widget.movie.posterPath,
-              fit: BoxFit.fill,
+              api.imageBaseUrl + widget.movie.posterPath,
+              fit: BoxFit.fitWidth,
+              height: 150,
             ),
             ListTile(
               title: Text(widget.movie.title),
-              subtitle: Text(widget.movie.overview + 'Music by Julie Gable. Lyrics by Sidney Stein.'),
+              subtitle: Text(
+                widget.movie.overview,
+                maxLines: 3,
+              ),
             ),
             ButtonBar(
               children: <Widget>[
