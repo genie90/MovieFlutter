@@ -54,6 +54,10 @@ class MovieBloc extends BlocBase {
     }
   }
 
+  void handleMovieTap(MovieModel model) {
+    log('GENIE Tap on ' + model.title);
+  }
+
   @override
   void dispose() {
     _moviesController.close();

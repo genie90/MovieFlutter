@@ -5,17 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:movieflutter/api/tmdb_api.dart';
 import 'package:movieflutter/models/movie_model.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class MovieLargeCardStyleBWidget extends StatefulWidget {
   final MovieModel movie;
 
-  const MovieLargeCardStyleBWidget({Key key, @required this.movie}) : super(key: key);
+  const MovieLargeCardStyleBWidget({Key key, @required this.movie})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => MovieLargeCardStyleBWidgetState();
 }
 
-class MovieLargeCardStyleBWidgetState extends State<MovieLargeCardStyleBWidget> {
+class MovieLargeCardStyleBWidgetState
+    extends State<MovieLargeCardStyleBWidget> {
   StreamSubscription _subscription;
 
   @override
@@ -29,11 +32,21 @@ class MovieLargeCardStyleBWidgetState extends State<MovieLargeCardStyleBWidget> 
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Image.network(
-              api.imageBaseUrl + widget.movie.posterPath,
-              fit: BoxFit.fill,
-              width: 100,
-              height: 150,
+            Stack(
+              children: <Widget>[
+                Container(
+                  height: 150,
+                  width: 100,
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+                FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: api.imageBaseUrl + widget.movie.posterPath,
+                  fit: BoxFit.fill,
+                  width: 100,
+                  height: 150,
+                ),
+              ],
             ),
             Flexible(
               child: Column(

@@ -3,7 +3,10 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movieflutter/api/tmdb_api.dart';
+import 'package:movieflutter/blocs/bloc_provider.dart';
+import 'package:movieflutter/blocs/movie_bloc.dart';
 import 'package:movieflutter/models/movie_model.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class MovieLargeCardWidget extends StatefulWidget {
   final MovieModel movie;
@@ -23,21 +26,33 @@ class MovieLargeCardWidgetState extends State<MovieLargeCardWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => Card(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
+  Widget build(BuildContext context) {
+    final MovieBloc _movieBloc = BlocProvider.of<MovieBloc>(context);
+
+    return Card(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      child: InkWell(
+        onTap: () => _movieBloc.handleMovieTap(widget.movie),
         child: Stack(
           children: <Widget>[
-            ConstrainedBox(
-              constraints: const BoxConstraints(minWidth: double.infinity),
-              child: ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.4), BlendMode.srcOver),
-                child: Image.network(
-                  api.imageBaseUrl + widget.movie.posterPath,
-                  fit: BoxFit.fitWidth,
+            Stack(
+              children: <Widget>[
+                Container(
                   height: 200,
+                  child: Center(child: CircularProgressIndicator()),
                 ),
-              ),
+                ColorFiltered(
+                  colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.4), BlendMode.srcOver),
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: api.imageBaseUrl + widget.movie.posterPath,
+                    fit: BoxFit.fitWidth,
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                ),
+              ],
             ),
             Container(
               height: 260,
@@ -78,5 +93,7 @@ class MovieLargeCardWidgetState extends State<MovieLargeCardWidget> {
             ),
           ],
         ),
-      );
+      ),
+    );
+  }
 }
