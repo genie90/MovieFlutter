@@ -27,72 +27,75 @@ class MovieLargeCardWidgetState extends State<MovieLargeCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final MovieBloc _movieBloc = BlocProvider.of<MovieBloc>(context);
 
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: InkWell(
-        onTap: () => _movieBloc.handleMovieTap(widget.movie),
-        child: Stack(
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                Container(
+      child: Stack(
+        children: <Widget>[
+          Stack(
+            children: <Widget>[
+              Container(
+                height: 200,
+                child: Center(child: CircularProgressIndicator()),
+              ),
+              ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.4), BlendMode.srcOver),
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: api.imageBaseUrl + widget.movie.posterPath,
+                  fit: BoxFit.fitWidth,
                   height: 200,
-                  child: Center(child: CircularProgressIndicator()),
+                  width: MediaQuery.of(context).size.width,
                 ),
-                ColorFiltered(
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.4), BlendMode.srcOver),
-                  child: FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image: api.imageBaseUrl + widget.movie.posterPath,
-                    fit: BoxFit.fitWidth,
-                    height: 200,
-                    width: MediaQuery.of(context).size.width,
+              ),
+              Positioned.fill(
+                child: new Material(
+                  color: Colors.transparent,
+                  child: new InkWell(
+                    onTap: () => BlocProvider.of<MovieBloc>(context)
+                        .handleMovieTap(context, widget.movie),
                   ),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            height: 260,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Spacer(),
+                ListTile(
+                  title: Text(
+                    widget.movie.title,
+                    maxLines: 1,
+                    style: Theme.of(context)
+                        .textTheme
+                        .title
+                        .apply(color: Colors.white70),
+                  ),
+                  subtitle: Text(
+                    widget.movie.overview,
+                    maxLines: 3,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle
+                        .apply(color: Colors.white70),
+                  ),
+                ),
+                ButtonBar(
+                  children: <Widget>[
+                    FlatButton(
+                      child: const Text('BUY TICKETS'),
+                      onPressed: () => {},
+                    ),
+                  ],
                 ),
               ],
             ),
-            Container(
-              height: 260,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Spacer(),
-                  ListTile(
-                    title: Text(
-                      widget.movie.title,
-                      maxLines: 1,
-                      style: Theme.of(context)
-                          .textTheme
-                          .title
-                          .apply(color: Colors.white70),
-                    ),
-                    subtitle: Text(
-                      widget.movie.overview,
-                      maxLines: 3,
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle
-                          .apply(color: Colors.white70),
-                    ),
-                  ),
-                  ButtonBar(
-                    children: <Widget>[
-                      FlatButton(
-                        child: const Text('BUY TICKETS'),
-                        onPressed: () {
-                          /* ... */
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -16,6 +16,7 @@ class TmdbApi {
   static const String TMDB_API_KEY = "dcb09c51e7d2c58d4a1b97f9533fbe90";
   static const String baseUrl = 'api.themoviedb.org';
   final String imageBaseUrl = 'http://image.tmdb.org/t/p/w185';
+  final String imageHDBaseUrl = 'http://image.tmdb.org/t/p/w500';
   final _httpClient = new HttpClient();
 
   ///

@@ -1,10 +1,12 @@
 import 'dart:collection';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:movieflutter/api/tmdb_api.dart';
 import 'package:movieflutter/blocs/bloc_provider.dart';
 import 'package:movieflutter/models/movie_model.dart';
 import 'package:movieflutter/models/movie_page_result.dart';
+import 'package:movieflutter/screens/movie_detail_screen.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MovieBloc extends BlocBase {
@@ -54,8 +56,12 @@ class MovieBloc extends BlocBase {
     }
   }
 
-  void handleMovieTap(MovieModel model) {
+  void handleMovieTap(BuildContext context, MovieModel model) {
     log('GENIE Tap on ' + model.title);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MovieDetailsScreen(model)),
+    );
   }
 
   @override

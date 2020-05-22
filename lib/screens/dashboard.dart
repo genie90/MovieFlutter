@@ -10,10 +10,6 @@ import 'package:movieflutter/widgets/movie_large_card_style_b_widget.dart';
 import 'package:movieflutter/widgets/movie_small_card_style_a_widget.dart';
 
 class DashboardScreen extends StatelessWidget {
-  final items = List<MovieModel>.generate(
-      1000,
-      (i) => MovieModel(
-          i, "Item $i", "https://Poster.c/123/123.jpg", "Overview $i"));
 
   @override
   Widget build(BuildContext context) {

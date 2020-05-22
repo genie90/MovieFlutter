@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:movieflutter/api/tmdb_api.dart';
+import 'package:movieflutter/blocs/bloc_provider.dart';
+import 'package:movieflutter/blocs/movie_bloc.dart';
 import 'package:movieflutter/models/movie_model.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -60,8 +62,7 @@ class SmallCardWidgetState extends State<SmallCardWidget> {
           children: <Widget>[
             Container(
               height: 200,
-              child: Center(
-                  child: CircularProgressIndicator()),
+              child: Center(child: CircularProgressIndicator()),
             ),
             FadeInImage.memoryNetwork(
               placeholder: kTransparentImage,
@@ -70,6 +71,12 @@ class SmallCardWidgetState extends State<SmallCardWidget> {
               width: MediaQuery.of(context).size.width,
               height: 200,
             ),
+            Positioned.fill(
+                child: new Material(
+                    color: Colors.transparent,
+                    child: new InkWell(
+                      onTap: () => BlocProvider.of<MovieBloc>(context).handleMovieTap(context, widget.movie),
+                    )))
           ],
         ),
         ButtonBar(
