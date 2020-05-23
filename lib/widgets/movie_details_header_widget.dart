@@ -31,7 +31,7 @@ class _MovieDetailsHeaderWidgetState extends State<MovieDetailsHeaderWidget> {
               FadeInImage.memoryNetwork(
                 placeholder: kTransparentImage,
                 image: widget.imagePath,
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.fitHeight,
                 height: 300,
                 width: MediaQuery.of(context).size.width,
               ),

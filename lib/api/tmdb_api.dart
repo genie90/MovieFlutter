@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:movieflutter/models/movie_details_model.dart';
 import 'package:movieflutter/models/movie_page_result.dart';
 
 
@@ -36,8 +37,6 @@ class TmdbApi {
       },
     );
 
-    log('Genie ' + uri.toString());
-
     var response = await _getRequest(uri);
 
     log(response);
@@ -50,6 +49,35 @@ class TmdbApi {
     return list;
   }
 
+  ///
+  /// Returns the list of movies/tv-show, based on criteria:
+  /// [type]: movie or tv (show)
+  /// [pageIndex]: page
+  /// [minYear, maxYear]: release dates range
+  /// [genre]: genre
+  ///
+  Future<MovieDetailsModel> detailsMovie(int id) async {
+    var uri = Uri.https(
+      baseUrl,
+      '3/movie/' + id.toString(),
+      <String, String>{
+        'api_key': TMDB_API_KEY,
+      },
+    );
+
+    log("GENIE" + uri.toString());
+
+    var response = await _getRequest(uri);
+
+    log(response);
+
+    MovieDetailsModel result = MovieDetailsModel.fromJSON(json.decode(response));
+
+    // Give some additional delay to simulate slow network
+    await Future.delayed(const Duration(seconds: 1));
+
+    return result;
+  }
   ///
   /// Routine to invoke the TMDB Web Server to get answers
   ///

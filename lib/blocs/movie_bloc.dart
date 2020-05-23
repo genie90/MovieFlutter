@@ -21,7 +21,6 @@ class MovieBloc extends BlocBase {
   Sink<int> get inIndex => _indexController.sink;
   Stream<int> get _outIndex => _indexController.stream;
 
-
   // Control Sink/Stream of Movie list
   PublishSubject<List<MovieModel>> _moviesController = PublishSubject<List<MovieModel>>();
   Sink<List<MovieModel>> get _inMoviesList => _moviesController.sink;
@@ -60,7 +59,7 @@ class MovieBloc extends BlocBase {
     log('GENIE Tap on ' + model.title);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MovieDetailsScreen(model)),
+      MaterialPageRoute(builder: (context) => MovieDetailsScreen(model.id)),
     );
   }
 

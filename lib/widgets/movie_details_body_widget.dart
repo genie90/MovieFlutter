@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:movieflutter/api/tmdb_api.dart';
-import 'package:movieflutter/models/movie_model.dart';
+import 'package:movieflutter/models/movie_details_model.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MovieDetailsBodyWidget extends StatefulWidget {
   @required
-  final MovieModel model;
+  final MovieDetailsModel model;
 
   const MovieDetailsBodyWidget({Key key, @required this.model})
       : super(key: key);
