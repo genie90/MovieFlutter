@@ -59,7 +59,7 @@ class MovieBloc extends BlocBase {
     log('GENIE Tap on ' + model.title);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MovieDetailsScreen(model.id)),
+      MaterialPageRoute(builder: (context) => MovieDetailsScreen(model.id, model.title)),
     );
   }
 

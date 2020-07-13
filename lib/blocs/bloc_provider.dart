@@ -33,6 +33,6 @@ class _BlocProviderState<T> extends State<BlocProvider<BlocBase>>{
 
   @override
   Widget build(BuildContext context){
-    return widget.child;
+    return Material(child: widget.child);
   }
 }

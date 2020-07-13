@@ -7,9 +7,10 @@ import 'package:movieflutter/widgets/movie_details_body_widget.dart';
 import 'package:movieflutter/widgets/movie_details_header_widget.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
-  int _id;
+  final int _id;
+  final String _title;
 
-  MovieDetailsScreen(this._id);
+  MovieDetailsScreen(this._id, this._title);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class MovieDetailsScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.black45,
-        title: Text("_model.title"),
+        title: Text(_title),
         elevation: 0.0,
       ),
       body: BlocProvider<MovieDetailsBloc>(
@@ -27,7 +28,13 @@ class MovieDetailsScreen extends StatelessWidget {
           child: StreamBuilder<MovieDetailsModel>(
               stream: _movieBloc.outMoviesList,
               builder: (context, snapshot) => !snapshot.hasData
-                  ? Container()
+                  ? Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
                   : Container(
                       color: Colors.black12,
                       child: Stack(
@@ -43,6 +50,21 @@ class MovieDetailsScreen extends StatelessWidget {
                             child: MovieDetailsBodyWidget(
                               model: snapshot.data,
                             ),
+                          ),
+                          Positioned(
+                            child: Align(
+                                alignment: FractionalOffset.bottomCenter,
+                                child: Container(
+                                  height: 50,
+                                  child: SizedBox.expand(
+                                    child: RaisedButton(
+                                      color: Theme.of(context).primaryColor,
+                                      textTheme: ButtonTextTheme.primary,
+                                      child: Text("BUY A TICKET"),
+                                      onPressed: () => {},
+                                    ),
+                                  ),
+                                )),
                           ),
                         ],
                       ),
